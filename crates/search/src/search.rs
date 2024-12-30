@@ -42,11 +42,12 @@ actions!(
 bitflags! {
     #[derive(Debug, PartialEq, Eq, Clone, Copy, Default)]
     pub struct SearchOptions: u8 {
-        const NONE = 0b000;
-        const WHOLE_WORD = 0b001;
-        const CASE_SENSITIVE = 0b010;
-        const INCLUDE_IGNORED = 0b100;
-        const REGEX = 0b1000;
+        const NONE            = 0b00000;
+        const WHOLE_WORD      = 0b00001;
+        const CASE_SENSITIVE  = 0b00010;
+        const INCLUDE_IGNORED = 0b00100;
+        const REGEX           = 0b01000;
+        const BACKWARDS       = 0b10000;
     }
 }
 

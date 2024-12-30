@@ -111,6 +111,7 @@ pub trait SearchableItem: Item + EventEmitter<SearchEvent> {
     ) -> Task<Vec<Self::Match>>;
     fn active_match_index(
         &mut self,
+        backwards: bool,
         matches: &[Self::Match],
         cx: &mut ViewContext<Self>,
     ) -> Option<usize>;
@@ -157,6 +158,7 @@ pub trait SearchableItemHandle: ItemHandle {
     ) -> Task<AnyVec<dyn Send>>;
     fn active_match_index(
         &self,
+        backwards: bool,
         matches: &AnyVec<dyn Send>,
         cx: &mut WindowContext,
     ) -> Option<usize>;
@@ -241,12 +243,13 @@ impl<T: SearchableItem> SearchableItemHandle for View<T> {
     }
     fn active_match_index(
         &self,
+        backwards: bool,
         matches: &AnyVec<dyn Send>,
         cx: &mut WindowContext,
     ) -> Option<usize> {
         let matches = matches.downcast_ref()?;
         self.update(cx, |this, cx| {
-            this.active_match_index(matches.as_slice(), cx)
+            this.active_match_index(backwards, matches.as_slice(), cx)
         })
     }
 

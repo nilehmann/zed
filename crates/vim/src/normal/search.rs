@@ -138,6 +138,9 @@ impl Vim {
                     if action.regex {
                         options |= SearchOptions::REGEX;
                     }
+                    if action.backwards {
+                        options |= SearchOptions::BACKWARDS;
+                    }
                     search_bar.set_search_options(options, cx);
                     let prior_mode = if self.temp_mode {
                         Mode::Insert
@@ -174,10 +177,8 @@ impl Vim {
                 let direction = self.search.direction;
                 // in the case that the query has changed, the search bar
                 // will have selected the next match already.
-                if (search_bar.query(cx) != self.search.initial_query)
-                    && self.search.direction == Direction::Next
-                {
-                    count = count.saturating_sub(1)
+                if search_bar.query(cx) != self.search.initial_query {
+                    count = count.saturating_sub(1);
                 }
                 self.search.count = 1;
                 search_bar.select_match(direction, count, cx);

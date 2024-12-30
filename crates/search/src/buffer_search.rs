@@ -1123,7 +1123,11 @@ impl BufferSearchBar {
                 let matches = self
                     .searchable_items_with_matches
                     .get(&searchable_item.downgrade())?;
-                searchable_item.active_match_index(matches, cx)
+                searchable_item.active_match_index(
+                    self.search_options.contains(SearchOptions::BACKWARDS),
+                    matches,
+                    cx,
+                )
             });
         if new_index != self.active_match_index {
             self.active_match_index = new_index;

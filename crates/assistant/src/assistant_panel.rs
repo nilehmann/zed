@@ -4330,11 +4330,13 @@ impl SearchableItem for ContextEditor {
 
     fn active_match_index(
         &mut self,
+        backwards: bool,
         matches: &[Self::Match],
         cx: &mut ViewContext<Self>,
     ) -> Option<usize> {
-        self.editor
-            .update(cx, |editor, cx| editor.active_match_index(matches, cx))
+        self.editor.update(cx, |editor, cx| {
+            editor.active_match_index(backwards, matches, cx)
+        })
     }
 }
 

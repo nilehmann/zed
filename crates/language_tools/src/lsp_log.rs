@@ -1088,11 +1088,12 @@ impl SearchableItem for LspLogView {
     }
     fn active_match_index(
         &mut self,
+        backwards: bool,
         matches: &[Self::Match],
         cx: &mut ViewContext<Self>,
     ) -> Option<usize> {
         self.editor
-            .update(cx, |e, cx| e.active_match_index(matches, cx))
+            .update(cx, |e, cx| e.active_match_index(backwards, matches, cx))
     }
 }
 

@@ -1158,6 +1158,7 @@ impl ProjectSearchView {
             &self.model.read(cx).match_ranges,
             &results_editor.selections.newest_anchor().head(),
             &results_editor.buffer().read(cx).snapshot(cx),
+            false,
         );
         if self.active_match_index != new_index {
             self.active_match_index = new_index;

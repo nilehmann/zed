@@ -1332,6 +1332,7 @@ impl SearchableItem for TerminalView {
     /// Reports back to the search toolbar what the active match should be (the selection)
     fn active_match_index(
         &mut self,
+        backwards: bool,
         matches: &[Self::Match],
         cx: &mut ViewContext<Self>,
     ) -> Option<usize> {
