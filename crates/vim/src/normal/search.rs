@@ -731,6 +731,12 @@ mod test {
         cx.simulate_keystrokes("*");
         cx.assert_state("one two ˇone", Mode::Normal);
 
+        // check that a backward search after last match works correctly
+        cx.set_state("aa\naa\nbbˇ", Mode::Normal);
+        cx.simulate_keystrokes("? a a");
+        cx.simulate_keystrokes("enter");
+        cx.assert_state("aa\nˇaa\nbb", Mode::Normal);
+
         // check that searching with unable search wrap
         cx.update_global(|store: &mut SettingsStore, cx| {
             store.update_user_settings::<EditorSettings>(cx, |s| s.search_wrap = Some(false));
@@ -877,7 +883,8 @@ mod test {
         cx.executor().advance_clock(Duration::from_millis(250));
         cx.run_until_parked();
 
-        cx.simulate_shared_keystrokes("/ a enter").await;
+        cx.simulate_shared_keystrokes("/ a").await;
+        cx.simulate_shared_keystrokes("enter").await;
         cx.shared_state().await.assert_eq(indoc! {
             "a
                 ba
